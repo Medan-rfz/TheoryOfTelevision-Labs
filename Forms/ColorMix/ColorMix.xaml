@@ -1,0 +1,114 @@
+﻿<Window x:Class="TheoryOfTelevision.ColorMix"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheoryOfTelevision"
+        mc:Ignorable="d"
+        Title="Color Mix" Height="600" Width="850" MinHeight="600" MinWidth="850" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/StandartImages/Icon.ico" KeyDown="Window_KeyDown" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="Canv" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseDown="Canv_MouseDown" ClipToBounds="True" MaxHeight="540" MaxWidth="476">
+
+            <Thumb x:Name="Point_1" Canvas.Left="145" Canvas.Top="129" DragDelta="Point_1_DragDelta" Panel.ZIndex="5" >
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Ellipse x:Name="pointP" Width="6" Height="6" Fill="Black"/>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+
+            <Ellipse x:Name="pointE" Fill="Black" Width="6" Height="6" Panel.ZIndex="3"/>
+            <Ellipse x:Name="pointR" Fill="Black" Width="6" Height="6" Panel.ZIndex="3"/>
+            <Ellipse x:Name="pointG" Fill="Black" Width="6" Height="6" Panel.ZIndex="3"/>
+            <Ellipse x:Name="pointB" Fill="Black" Width="6" Height="6" Panel.ZIndex="3"/>
+
+            <Label Content="E" Canvas.Left="223" Canvas.Top="293" FontSize="16" Panel.ZIndex="4"/>
+            <Label Content="R" Canvas.Left="373" Canvas.Top="322" FontSize="16" Panel.ZIndex="4"/>
+            <Label Content="G" Canvas.Left="201" Canvas.Top="154" FontSize="16" Panel.ZIndex="4"/>
+            <Label Content="B" Canvas.Left="106" Canvas.Top="421" FontSize="16" Panel.ZIndex="4"/>
+
+            <Image Name="Locus" Source="pack://application:,,,/StandartImages/Locus.png" Panel.ZIndex="1"/>
+            <Image Name="Locus_Contur2" Source="pack://application:,,,/StandartImages/Locus_Contur2.png" Height="540" Width="476" Panel.ZIndex="3"/>
+
+            <Line x:Name="HorizontalLine" Stroke="Black" X1="0" X2="100" Y1="100" Y2="100" StrokeThickness="1" StrokeDashArray="2 2" Canvas.Left="47" Canvas.Top="32" Fill="Black" Panel.ZIndex="4" Height="460" Width="409"/>
+            <Line x:Name="VerticalLine" Stroke="Black" X1="100" X2="100" Y1="100" Y2="460" StrokeThickness="1" StrokeDashArray="2 2" Canvas.Left="47" Canvas.Top="32" Fill="Black" Panel.ZIndex="4" Height="460" Width="409"/>
+
+            <Line Stroke="Black" X1="0" X2="172" Y1="0" Y2="137" StrokeThickness="1" Canvas.Left="201" Canvas.Top="185" Fill="Black" Panel.ZIndex="3"/>
+            <Line Stroke="Black" X1="0" X2="76" Y1="276" Y2="0" StrokeThickness="1" Canvas.Left="125" Canvas.Top="185" Fill="Black" Panel.ZIndex="3"/>
+            <Line Stroke="Black" X1="0" X2="250" Y1="138" Y2="0" StrokeThickness="1" Canvas.Left="125" Canvas.Top="324" Fill="Black" Panel.ZIndex="3"/>
+
+            <Line x:Name="lineMonochrom" Stroke="Black" X1="0" X2="-100" Y1="0" Y2="100" StrokeThickness="1" Canvas.Left="218" Canvas.Top="322" Fill="Black" Panel.ZIndex="2" Visibility="Hidden"/>
+            <Line x:Name="dlineMonochrom" Stroke="Black" X1="0" X2="-100" Y1="0" Y2="100" StrokeThickness="1" Canvas.Left="218" Canvas.Top="322" Fill="Black" Panel.ZIndex="2" Visibility="Hidden"/>
+        </Canvas>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+                    <TextBox Height="32" TextWrapping="Wrap" Text="Система XYZ" FontSize="20" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="0,5"/>
+
+                    <StackPanel Height="39" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                        <Label x:Name="Xvalue" Content="X:" MinWidth="115" FontSize="20"/>
+                        <Label x:Name="Yvalue" Content="Y:" MinWidth="115" FontSize="20"/>
+                        <Label x:Name="Zvalue" Content="Z:" MinWidth="115" FontSize="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+                    <TextBox TextWrapping="Wrap" Text="Система RGB" FontSize="20" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="0,5"/>
+
+                    <StackPanel Height="37" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                        <Label x:Name="Rvalue" Content="R:"  MinWidth="115" FontSize="20"/>
+                        <Label x:Name="Gvalue" Content="G:"  MinWidth="115" FontSize="20"/>
+                        <Label x:Name="Bvalue" Content="B:"  MinWidth="115" FontSize="20"/>
+                    </StackPanel>
+
+                    <TextBlock x:Name="ColorBlock" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FF00FF00" Height="50"
+                       Text="ВАШ RGB ЦВЕТ" FontSize="20" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="0,5"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Длина волны" FontSize="20"/>
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="монохроматического света" FontSize="20"/>
+                    <Label x:Name="waveLen" HorizontalAlignment="Center" VerticalAlignment="Center" Content="" FontSize="20"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,286 @@
+﻿<Window xmlns:oxy="http://oxyplot.org/wpf"  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  x:Class="TheoryOfTelevision.DynamicChannel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheoryOfTelevision"
+        mc:Ignorable="d"
+        Title="Dinamic Research" Height="800" Width="1000"  WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/StandartImages/Icon.ico" Closing="Window_Closing" ResizeMode="NoResize" >
+    <Grid>
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#FFDEE6E8" Offset="1"/>
+                <GradientStop Color="White" Offset="0.347"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0">
+            <TabItem x:Name="TabItemScan" Header="Развёртка" Width="100" Height="30">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200*"/>
+                        <RowDefinition Height="200*"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" >
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Canvas>
+                            <Label  Canvas.Left="300" Canvas.Top="10" Content="Положение объекта на первом кадре" Foreground="Black" FontSize="20" />
+                            <Border Canvas.Left="70" Canvas.Top="50" BorderBrush="Black" BorderThickness="1">
+                                <Rectangle Width="800" Height="100" Fill="Black"/>
+                            </Border>
+
+                            <Border Canvas.Left="80" Canvas.Top="50" BorderBrush="Black" BorderThickness="1">
+                                <Rectangle Width="100" Height="100" Fill="White"/>
+                            </Border>
+                        </Canvas>
+                    </Border>
+
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Canvas>
+                            <Label  Canvas.Left="300" Canvas.Top="10" Content="Положение объекта на следующем кадре" Foreground="Black" FontSize="20" />
+
+                            <Border Canvas.Left="70" Canvas.Top="50" BorderBrush="Black" BorderThickness="1">
+                                <Rectangle Width="800" Height="100" Fill="Black"/>
+                            </Border>
+
+                            <Border x:Name="shiftRec" Canvas.Left="{Binding ElementName=sliderShift, Path=Value}" Canvas.Top="50" BorderBrush="Black" BorderThickness="1">
+                                <Rectangle Width="100" Height="100" Fill="White"/>
+                            </Border>
+                        </Canvas>
+                    </Border>
+
+
+                    <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="White"/>
+                                <GradientStop Color="#FFD4D4D4" Offset="0.846"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <oxy:Plot x:Name="PlotWB" IsManipulationEnabled="False" IsMouseWheelEnabled="False" 
+                              Grid.ColumnSpan="3">
+                            <oxy:Plot.Axes>
+                                <oxy:LinearAxis Position="Left" Minimum="0" Maximum="1.1" IsZoomEnabled="False" IsPanEnabled="False"  MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                                <oxy:LinearAxis Position="Bottom" IsZoomEnabled="False" IsPanEnabled="False"  MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                            </oxy:Plot.Axes>
+                            <oxy:Plot.Series>
+
+                                <oxy:LineSeries x:Name="LineZeroPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                                <oxy:LineSeries x:Name="LineShiftPos" Color="Red" LineStyle="Dash" BrokenLineColor="#FF747474"/>
+
+                            </oxy:Plot.Series>
+                        </oxy:Plot>
+                    </Border>
+
+                </Grid>
+
+            </TabItem>
+
+            <TabItem x:Name="TabItemAFS" Header="АЧХ" Width="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <oxy:Plot Grid.Row="0" x:Name="AHZeroPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YAHZeroPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="АЧХ первого кадра"/>
+                            <oxy:LinearAxis x:Name="XAHZeroPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineAHZeroPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+
+                    <oxy:Plot Grid.Row="1" x:Name="AHShiftPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YAHShiftPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="АЧХ следующего кадра"/>
+                            <oxy:LinearAxis x:Name="XAHShiftPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineAHShiftPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+
+                    <oxy:Plot Grid.Row="2" x:Name="AHTwoPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YAHTwoPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="АЧХ суммы спектров"/>
+                            <oxy:LinearAxis x:Name="XAHTwoPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineAHTwoPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+                </Grid>
+            </TabItem>
+
+            
+            <TabItem x:Name="TabItemPFS" Header="ФЧХ" Width="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <oxy:Plot Grid.Row="0" x:Name="FHZeroPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YFHZeroPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="ФЧХ первого кадра"/>
+                            <oxy:LinearAxis x:Name="XFHZeroPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineFHZeroPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+
+                    <oxy:Plot Grid.Row="1" x:Name="FHShiftPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YFHShiftPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="ФЧХ следующего кадра"/>
+                            <oxy:LinearAxis x:Name="XFHShiftPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineFHShiftPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+
+                    <oxy:Plot Grid.Row="2" x:Name="FHTwoPos" IsManipulationEnabled="False" IsMouseWheelEnabled="True" Grid.ColumnSpan="2">
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis x:Name="YFHTwoPos" Position="Left" Minimum="0" Maximum="1" 
+                                            IsZoomEnabled="False" IsPanEnabled="False" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"
+                                            Title="ФЧХ суммы спектров"/>
+                            <oxy:LinearAxis x:Name="XFHTwoPos" Position="Bottom"
+                                            Minimum="0" 
+                                            Maximum="1"
+                                            IsZoomEnabled="True" IsPanEnabled="True" MajorGridlineStyle="Dash"
+                                            MajorGridlineColor="Gray" MinorGridlineStyle="Dot" MinorGridlineColor="LightGray"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries x:Name="LineFHTwoPos" Color="Blue" LineStyle="Solid" BrokenLineColor="#FF747474"/>
+                            <oxy:AreaSeries/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0.386"/>
+                    <GradientStop Color="#FFE2E2E2" Offset="0.846"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <DockPanel Margin="40,10" HorizontalAlignment="Stretch">
+                <Label Content="Смещение объекта:" Margin="0,0,10,0" FontSize="14" VerticalAlignment="Center"/>
+                <Label x:Name="labelShift" Content="0 мкс" Width="80" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <Slider x:Name="sliderShift" Orientation="Horizontal" Minimum="80" Maximum="760" ValueChanged="sliderShift_ValueChanged" VerticalAlignment="Center"/>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                <Label Content="Период развёртки строки:"/>
+                <TextBox x:Name="textBoxPeriod" TextAlignment="Center" Width="80" Text="1" TextChanged="textBoxPeriod_TextChanged" PreviewKeyDown="textBoxPeriod_PreviewKeyDown"/>
+                <Label Content="мкс"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,20,0">
+                
+                <Rectangle x:Name="indTrueSpectr" Fill="Red" Height="10" Width="10" Margin="10,0" ToolTip="Индикатор соответствия спектра выбранному смещению"/>
+                <Button x:Name="ButCalcDFT" Content="Вычислить спектр" Width="110" Margin="5,0,5,0" 
+                        ToolTip="Время вычисления зависит от размера изображения!" IsEnabled="True" Click="ButCalcDFT_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF93BFFF" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Window>
